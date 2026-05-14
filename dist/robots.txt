@@ -1,4 +1,0 @@
-User-Agent: *
-Allow: /
-
-Sitemap: https://moneysaving.example.com/sitemap.xml
