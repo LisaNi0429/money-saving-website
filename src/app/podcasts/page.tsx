@@ -13,12 +13,20 @@ export default function PodcastsPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-grow bg-gray-50">
-        {/* Page Header */}
-        <div className="bg-white border-b">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">省钱播客</h1>
-            <p className="text-gray-600 text-lg">
+      <main className="flex-grow">
+        {/* Page Banner */}
+        <div className="relative overflow-hidden gradient-forest text-white">
+          <div className="absolute top-[-40px] right-[-40px] w-[200px] h-[200px] rounded-full border border-white/10" />
+          <div className="absolute bottom-[-60px] left-[-30px] w-[160px] h-[160px] rounded-full border border-white/5" />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+            <p className="text-[#D4A853] text-sm font-medium tracking-widest uppercase mb-3">Podcast</p>
+            <h1
+              className="text-3xl md:text-5xl font-bold mb-4"
+              style={{ fontFamily: "'Noto Serif SC', Georgia, serif" }}
+            >
+              省钱播客
+            </h1>
+            <p className="text-white/70 text-lg max-w-xl">
               深度内容，陪伴你的通勤时光
             </p>
           </div>
@@ -26,21 +34,35 @@ export default function PodcastsPage() {
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Subscribe Links */}
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 mb-8 text-white">
-            <h2 className="text-xl font-bold mb-4">订阅我们的播客</h2>
-            <div className="flex flex-wrap gap-3">
-              <a href="#" className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-full text-sm transition-colors">
-                🍎 Apple Podcasts
-              </a>
-              <a href="#" className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-full text-sm transition-colors">
-                🎵 小宇宙
-              </a>
-              <a href="#" className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-full text-sm transition-colors">
-                ☁️ 网易云音乐
-              </a>
-              <a href="#" className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-full text-sm transition-colors">
-                📻 喜马拉雅
-              </a>
+          <div className="bg-gradient-to-r from-[#0F4C3A] to-[#1A6B52] rounded-2xl p-6 md:p-8 mb-10 text-white relative overflow-hidden">
+            <div className="absolute top-[-30px] right-[-30px] w-[120px] h-[120px] rounded-full border border-white/10" />
+            <div className="relative">
+              <h2 className="text-xl font-bold mb-5">订阅我们的播客</h2>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { label: "Apple Podcasts", icon: (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043A5.022 5.022 0 0019.7.165a10.16 10.16 0 00-1.564-.073C17.342.038 16.548 0 15.753 0H8.247c-.795 0-1.59.038-2.383.092-.524.03-1.048.1-1.564.21A5.022 5.022 0 002.426.89C1.308 1.624.563 2.624.246 3.934a9.23 9.23 0 00-.24 2.19C.003 6.916 0 7.71 0 8.504v6.992c0 .795.003 1.59.006 2.38a9.23 9.23 0 00.24 2.19c.317 1.31 1.062 2.31 2.18 3.043.525.34 1.09.568 1.7.724.516.11 1.04.18 1.564.21.793.054 1.588.092 2.383.092h7.506c.795 0 1.59-.038 2.383-.092.524-.03 1.048-.1 1.564-.21a5.022 5.022 0 001.7-.724c1.118-.733 1.863-1.733 2.18-3.043.117-.724.2-1.456.24-2.19.003-.79.006-1.585.006-2.38V8.504c0-.795-.003-1.59-.006-2.38zM12 18.578a5.415 5.415 0 01-3.818-1.584 5.415 5.415 0 01-1.584-3.818c0-1.49.598-2.79 1.584-3.818A5.415 5.415 0 0112 7.774a5.415 5.415 0 013.818 1.584A5.415 5.415 0 0117.402 13.176a5.415 5.415 0 01-1.584 3.818A5.415 5.415 0 0112 18.578z"/></svg>
+                  )},
+                  { label: "小宇宙", icon: (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                  )},
+                  { label: "网易云音乐", icon: (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                  )},
+                  { label: "喜马拉雅", icon: (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                  )},
+                ].map((platform) => (
+                  <a
+                    key={platform.label}
+                    href="#"
+                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full text-sm transition-colors backdrop-blur-sm"
+                  >
+                    {platform.icon}
+                    {platform.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -50,27 +72,32 @@ export default function PodcastsPage() {
               <Link
                 key={podcast.id}
                 href={`/podcasts/${podcast.slug}`}
-                className="block bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow"
+                className="card-hover group block bg-white rounded-2xl p-6 border border-[#E8E8E4] hover:border-[#D4A853]/30"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center">
-                    <span className="text-4xl">🎧</span>
+                <div className="flex items-start gap-5">
+                  <div className="flex-shrink-0 w-20 h-20 rounded-xl gradient-podcast flex items-center justify-center">
+                    <svg className="w-8 h-8 text-[#B8912E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                      <line x1="12" y1="19" x2="12" y2="23" />
+                      <line x1="8" y1="23" x2="16" y2="23" />
+                    </svg>
                   </div>
-                  <div className="flex-grow">
-                    <h2 className="text-xl font-bold mb-2">{podcast.title}</h2>
-                    <p className="text-gray-600 mb-3">{podcast.description}</p>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <span className="bg-gray-100 px-2 py-1 rounded">{podcast.duration}</span>
-                      <span className="mx-3">·</span>
+                  <div className="flex-grow min-w-0">
+                    <h2 className="text-xl font-bold text-[#0F4C3A] mb-2 group-hover:text-[#10B981] transition-colors">
+                      {podcast.title}
+                    </h2>
+                    <p className="text-[#4A5568] text-sm mb-3 leading-relaxed">{podcast.description}</p>
+                    <div className="flex items-center gap-4 text-xs text-[#94A3B8]">
+                      <span className="tag-capsule bg-[#FAFAF8] text-[#4A5568] border border-[#E8E8E4]">{podcast.duration}</span>
                       <span>{podcast.playCount.toLocaleString()} 次播放</span>
-                      <span className="mx-3">·</span>
                       <span>{podcast.date}</span>
                     </div>
                   </div>
                   <div className="flex-shrink-0 self-center">
-                    <div className="bg-green-100 rounded-full p-4">
-                      <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 5.84a.5.5 0 01.77-.42l7.15 4.16a.5.5 0 010 .84l-7.15 4.16a.5.5 0 01-.77-.42V5.84z" />
+                    <div className="w-12 h-12 rounded-full bg-[#0F4C3A] flex items-center justify-center group-hover:bg-[#10B981] transition-colors">
+                      <svg className="w-5 h-5 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5.14v14l11-7-11-7z" />
                       </svg>
                     </div>
                   </div>
