@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { books } from "@/data/content";
@@ -24,7 +25,7 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const book = books.find((b) => b.id === parseInt(id));
 
@@ -35,8 +36,28 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: `${book.title} - 无痛省钱攒钱`,
+    title: book.title,
     description: book.summary,
+    keywords: book.tags,
+    authors: [{ name: book.author }],
+    alternates: {
+      canonical: `/money-saving-website/books/${book.id}/`,
+    },
+    openGraph: {
+      title: book.title,
+      description: book.summary,
+      url: `https://lisani0429.github.io/money-saving-website/books/${book.id}/`,
+      siteName: "无痛省钱攒钱",
+      locale: "zh_CN",
+      type: "book",
+      authors: [book.author],
+      tags: book.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: book.title,
+      description: book.summary,
+    },
   };
 }
 
@@ -48,8 +69,76 @@ export default async function BookPage({ params }: Props) {
     notFound();
   }
 
+  // JSON-LD structured data - Book
+  const bookSchema = {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: book.title,
+    author: {
+      "@type": "Person",
+      name: book.author,
+    },
+    description: book.summary,
+    url: `https://lisani0429.github.io/money-saving-website/books/${book.id}/`,
+    image: book.cover
+      ? `https://lisani0429.github.io/money-saving-website${book.cover}`
+      : undefined,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: book.rating,
+      bestRating: "10",
+      worstRating: "1",
+    },
+    genre: book.category,
+    keywords: book.tags.join(", "),
+    review: {
+      "@type": "Review",
+      reviewBody: book.notes,
+      author: {
+        "@type": "Organization",
+        name: "无痛省钱攒钱团队",
+      },
+    },
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "理财图书推荐",
+        item: "https://lisani0429.github.io/money-saving-website/books/",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: book.title,
+        item: `https://lisani0429.github.io/money-saving-website/books/${book.id}/`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(bookSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">

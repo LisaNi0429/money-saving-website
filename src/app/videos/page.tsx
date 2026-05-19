@@ -1,16 +1,84 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { videos } from "@/data/content";
 
-export const metadata = {
-  title: "短视频 - 无痛省钱攒钱",
-  description: "精选省钱短视频，快速掌握实用省钱技巧",
+export const metadata: Metadata = {
+  title: "省钱短视频 - 快速掌握实用省钱技巧",
+  description: "精选省钱短视频，1分钟学会一个省钱妙招，快速掌握实用省钱技巧，帮助年轻人、宝妈和中年人轻松省钱。",
+  keywords: ["省钱视频", "省钱技巧", "短视频", "理财视频", "省钱妙招"],
+  alternates: {
+    canonical: "/money-saving-website/videos/",
+  },
+  openGraph: {
+    title: "省钱短视频 - 快速掌握实用省钱技巧",
+    description: "精选省钱短视频，1分钟学会一个省钱妙招",
+    url: "https://lisani0429.github.io/money-saving-website/videos/",
+    siteName: "无痛省钱攒钱",
+    locale: "zh_CN",
+    type: "website",
+  },
 };
 
 export default function VideosPage() {
+  // JSON-LD structured data - VideoGallery
+  const videoGallerySchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoGallery",
+    name: "省钱短视频",
+    description: "精选省钱短视频，快速掌握实用省钱技巧",
+    url: "https://lisani0429.github.io/money-saving-website/videos/",
+    video: videos.map((video) => ({
+      "@type": "VideoObject",
+      name: video.title,
+      description: video.title,
+      url: `https://lisani0429.github.io/money-saving-website/videos/${video.slug}/`,
+      thumbnailUrl: video.thumbnail
+        ? `https://lisani0429.github.io/money-saving-website${video.thumbnail}`
+        : undefined,
+      uploadDate: video.date,
+      duration: video.duration,
+      interactionStatistic: {
+        "@type": "InteractionCounter",
+        interactionType: { "@type": "WatchAction" },
+        userInteractionCount: video.views,
+      },
+    })),
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "省钱短视频",
+        item: "https://lisani0429.github.io/money-saving-website/videos/",
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoGallerySchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">

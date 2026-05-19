@@ -1,7 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { books } from "@/data/content";
+
+export const metadata: Metadata = {
+  title: "理财图书推荐 - 深度阅读笔记",
+  description: "精选优质理财书籍，提供深度阅读笔记和核心观点提炼，帮助年轻人、宝妈和中年人建立正确的财商思维。",
+  keywords: ["理财图书", "财商教育", "理财书籍推荐", "阅读笔记", "理财入门"],
+  alternates: {
+    canonical: "/money-saving-website/books/",
+  },
+  openGraph: {
+    title: "理财图书推荐 - 深度阅读笔记",
+    description: "精选优质理财书籍，提供深度阅读笔记和核心观点提炼",
+    url: "https://lisani0429.github.io/money-saving-website/books/",
+    siteName: "无痛省钱攒钱",
+    locale: "zh_CN",
+    type: "website",
+  },
+};
 
 function StarIcon({ filled = true }: { filled?: boolean }) {
   return (
@@ -11,14 +29,71 @@ function StarIcon({ filled = true }: { filled?: boolean }) {
   );
 }
 
-export const metadata = {
-  title: "图书笔记 - 无痛省钱攒钱",
-  description: "精选理财图书推荐和深度阅读笔记",
-};
-
 export default function BooksPage() {
+  // JSON-LD structured data - CollectionPage
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "理财图书推荐",
+    description: "精选优质理财书籍，提供深度阅读笔记和核心观点提炼",
+    url: "https://lisani0429.github.io/money-saving-website/books/",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: books.map((book, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Book",
+          name: book.title,
+          author: {
+            "@type": "Person",
+            name: book.author,
+          },
+          url: `https://lisani0429.github.io/money-saving-website/books/${book.id}/`,
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: book.rating,
+            bestRating: "10",
+            worstRating: "1",
+          },
+          genre: book.category,
+        },
+      })),
+    },
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "理财图书推荐",
+        item: "https://lisani0429.github.io/money-saving-website/books/",
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { articles } from "@/data/content";
@@ -16,7 +17,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = articles.find((a) => a.slug === slug);
 
@@ -27,8 +28,29 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: `${article.title} - 无痛省钱攒钱`,
+    title: article.title,
     description: article.excerpt,
+    keywords: article.tags,
+    authors: [{ name: "无痛省钱攒钱团队" }],
+    alternates: {
+      canonical: `/money-saving-website/articles/${article.slug}/`,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      url: `https://lisani0429.github.io/money-saving-website/articles/${article.slug}/`,
+      siteName: "无痛省钱攒钱",
+      locale: "zh_CN",
+      type: "article",
+      publishedTime: article.date,
+      authors: ["无痛省钱攒钱团队"],
+      tags: article.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
+    },
   };
 }
 
@@ -40,8 +62,75 @@ export default async function ArticlePage({ params }: Props) {
     notFound();
   }
 
+  // JSON-LD structured data - Article
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    url: `https://lisani0429.github.io/money-saving-website/articles/${article.slug}/`,
+    datePublished: article.date,
+    dateModified: article.date,
+    author: {
+      "@type": "Organization",
+      name: "无痛省钱攒钱团队",
+      url: "https://lisani0429.github.io/money-saving-website/",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "无痛省钱攒钱",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://lisani0429.github.io/money-saving-website/logo.png",
+      },
+    },
+    image: article.image
+      ? `https://lisani0429.github.io/money-saving-website${article.image}`
+      : undefined,
+    keywords: article.tags.join(", "),
+    articleSection: article.categoryName,
+    wordCount: article.content.length,
+    timeRequired: article.readTime,
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "图文文章",
+        item: "https://lisani0429.github.io/money-saving-website/articles/",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: article.title,
+        item: `https://lisani0429.github.io/money-saving-website/articles/${article.slug}/`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">

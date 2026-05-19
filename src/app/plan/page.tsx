@@ -108,8 +108,68 @@ export default function PlanPage() {
 
   const stepLabels = ["基本信息", "用户类型", "储蓄目标"];
 
+  // JSON-LD structured data - HowTo
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "生成你的省钱计划",
+    description: "只需几分钟，获得专属于你的个性化省钱方案",
+    url: "https://lisani0429.github.io/money-saving-website/plan/",
+    totalTime: "PT5M",
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: "填写基本信息",
+        text: "输入月收入、月支出和现有存款",
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "选择用户类型",
+        text: "选择适合你的身份类型",
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "设定储蓄目标",
+        text: "选择你的储蓄目标",
+      },
+    ],
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "生成省钱计划",
+        item: "https://lisani0429.github.io/money-saving-website/plan/",
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">

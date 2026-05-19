@@ -1,11 +1,24 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { articles, categories } from "@/data/content";
 
-export const metadata = {
-  title: "图文文章 - 无痛省钱攒钱",
-  description: "精选省钱攻略文章，帮助年轻人、宝妈和中年人建立健康的消费习惯",
+export const metadata: Metadata = {
+  title: "图文文章 - 精选省钱攻略",
+  description: "精选省钱攻略文章，帮助年轻人、宝妈和中年人建立健康的消费习惯，提供实用的省钱技巧和理财建议。",
+  keywords: ["省钱文章", "攒钱攻略", "理财技巧", "消费观念", "家庭财务", "省钱方法"],
+  alternates: {
+    canonical: "/money-saving-website/articles/",
+  },
+  openGraph: {
+    title: "图文文章 - 精选省钱攻略",
+    description: "精选省钱攻略文章，帮助年轻人、宝妈和中年人建立健康的消费习惯",
+    url: "https://lisani0429.github.io/money-saving-website/articles/",
+    siteName: "无痛省钱攒钱",
+    locale: "zh_CN",
+    type: "website",
+  },
 };
 
 export default function ArticlesPage({
@@ -19,8 +32,67 @@ export default function ArticlesPage({
     ? articles.filter((a) => a.category === categoryFilter)
     : articles;
 
+  // JSON-LD structured data - Blog
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "无痛省钱攒钱 - 图文文章",
+    description: "精选省钱攻略文章，帮助年轻人、宝妈和中年人建立健康的消费习惯",
+    url: "https://lisani0429.github.io/money-saving-website/articles/",
+    publisher: {
+      "@type": "Organization",
+      name: "无痛省钱攒钱",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://lisani0429.github.io/money-saving-website/logo.png",
+      },
+    },
+    blogPost: filteredArticles.map((article) => ({
+      "@type": "BlogPosting",
+      headline: article.title,
+      description: article.excerpt,
+      url: `https://lisani0429.github.io/money-saving-website/articles/${article.slug}/`,
+      datePublished: article.date,
+      author: {
+        "@type": "Organization",
+        name: "无痛省钱攒钱团队",
+      },
+      keywords: article.tags.join(", "),
+    })),
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "图文文章",
+        item: "https://lisani0429.github.io/money-saving-website/articles/",
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">

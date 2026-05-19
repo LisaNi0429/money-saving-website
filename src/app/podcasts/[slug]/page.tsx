@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { podcasts } from "@/data/content";
@@ -16,7 +17,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const podcast = podcasts.find((p) => p.slug === slug);
 
@@ -27,8 +28,25 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: `${podcast.title} - 无痛省钱攒钱`,
+    title: podcast.title,
     description: podcast.description,
+    keywords: ["省钱播客", "理财播客", "消费心理", "理财书籍", "省钱故事"],
+    alternates: {
+      canonical: `/money-saving-website/podcasts/${podcast.slug}/`,
+    },
+    openGraph: {
+      title: podcast.title,
+      description: podcast.description,
+      url: `https://lisani0429.github.io/money-saving-website/podcasts/${podcast.slug}/`,
+      siteName: "无痛省钱攒钱",
+      locale: "zh_CN",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: podcast.title,
+      description: podcast.description,
+    },
   };
 }
 
@@ -40,8 +58,65 @@ export default async function PodcastPage({ params }: Props) {
     notFound();
   }
 
+  // JSON-LD structured data - PodcastEpisode
+  const podcastEpisodeSchema = {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    name: podcast.title,
+    description: podcast.description,
+    url: `https://lisani0429.github.io/money-saving-website/podcasts/${podcast.slug}/`,
+    datePublished: podcast.date,
+    duration: podcast.duration,
+    partOfSeries: {
+      "@type": "PodcastSeries",
+      name: "省钱播客",
+      url: "https://lisani0429.github.io/money-saving-website/podcasts/",
+    },
+    interactionStatistic: {
+      "@type": "InteractionCounter",
+      interactionType: { "@type": "ListenAction" },
+      userInteractionCount: podcast.playCount,
+    },
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "首页",
+        item: "https://lisani0429.github.io/money-saving-website/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "省钱播客",
+        item: "https://lisani0429.github.io/money-saving-website/podcasts/",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: podcast.title,
+        item: `https://lisani0429.github.io/money-saving-website/podcasts/${podcast.slug}/`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(podcastEpisodeSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Header />
 
       <main className="flex-grow">
