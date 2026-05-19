@@ -1,0 +1,18 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+User-Agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Host: https://lisani0429.github.io/money-saving-website
+Sitemap: https://lisani0429.github.io/money-saving-website/sitemap.xml
