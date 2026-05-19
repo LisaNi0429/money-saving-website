@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useParams, usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "@/lib/I18nContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 const navLinks = [
@@ -17,7 +17,7 @@ export default function Header() {
   const params = useParams();
   const pathname = usePathname();
   const locale = params.locale as string;
-  const t = useTranslations("nav");
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -60,7 +60,7 @@ export default function Header() {
               </svg>
             </div>
             <span className="text-lg font-bold text-[#0F4C3A] hidden sm:block group-hover:text-[#1A6B52] transition-colors">
-              {t("home")}
+              {t("nav.home")}
             </span>
           </Link>
 
@@ -72,7 +72,7 @@ export default function Header() {
                 href={`/${locale}${link.href}`}
                 className="px-4 py-2 text-sm font-medium text-[#4A5568] hover:text-[#0F4C3A] rounded-lg hover:bg-[#FAFAF8] transition-all"
               >
-                {t(link.label)}
+                {t(`nav.${link.label}`)}
               </Link>
             ))}
           </nav>
@@ -84,7 +84,7 @@ export default function Header() {
               href={`/${locale}/plan`}
               className="inline-flex items-center gap-2 bg-[#0F4C3A] text-white px-5 py-2.5 rounded-full font-medium text-sm hover:bg-[#1A6B52] transition-all shadow-md hover:shadow-lg"
             >
-              {t("startSaving")}
+              {t("nav.startSaving")}
             </Link>
           </div>
 
@@ -138,7 +138,7 @@ export default function Header() {
                   href={`/${locale}${link.href}`}
                   className="px-4 py-3 text-[#4A5568] hover:text-[#0F4C3A] hover:bg-[#FAFAF8] rounded-lg font-medium transition-all"
                 >
-                  {t(link.label)}
+                  {t(`nav.${link.label}`)}
                 </Link>
               ))}
               <div className="mt-3 pt-3 border-t border-[#E8E8E4]">
@@ -146,7 +146,7 @@ export default function Header() {
                   href={`/${locale}/plan`}
                   className="flex items-center justify-center gap-2 bg-[#0F4C3A] text-white px-5 py-3 rounded-xl font-medium hover:bg-[#1A6B52] transition-all"
                 >
-                  {t("startSaving")}
+                  {t("nav.startSaving")}
                 </Link>
               </div>
             </nav>

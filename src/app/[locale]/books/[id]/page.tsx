@@ -3,11 +3,10 @@ export const dynamic = "force-static";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { books } from "@/data/content";
-import { locales } from "@/i18n/config";
+import { getMessages, t as translate, locales, type Locale } from "@/lib/i18n";
 
 function StarIcon({ filled = true, size = 20 }: { filled?: boolean; size?: number }) {
   return (
@@ -18,7 +17,7 @@ function StarIcon({ filled = true, size = 20 }: { filled?: boolean; size?: numbe
 }
 
 interface Props {
-  params: { locale: string; id: string };
+  params: Promise<{ locale: string; id: string }>;
 }
 
 export function generateStaticParams() {
@@ -32,8 +31,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, id } = params;
-  const t = await getTranslations({ locale });
+  const { locale, id } = await params;
+  const messages = getMessages(locale as Locale);
   const book = books.find((b) => b.id === parseInt(id));
 
   if (!book) {
@@ -43,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const bookIndex = books.findIndex((b) => b.id === parseInt(id));
-  const translatedTitle = t(`books.book${bookIndex + 1}.title`);
+  const translatedTitle = translate(messages, `books.book${bookIndex + 1}.title`);
 
   return {
     title: translatedTitle,
@@ -52,12 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BookPage({ params }: Props) {
-  const { locale, id } = params;
-  
-  // Enable static rendering
-  setRequestLocale(locale);
-  
-  const t = await getTranslations({ locale });
+  const { locale, id } = await params;
+  const messages = getMessages(locale as Locale);
+
+  function t(key: string): string {
+    return translate(messages, key);
+  }
+
   const book = books.find((b) => b.id === parseInt(id));
 
   if (!book) {

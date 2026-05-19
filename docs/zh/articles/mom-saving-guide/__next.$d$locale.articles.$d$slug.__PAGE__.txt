@@ -1,0 +1,33 @@
+1:"$Sreact.fragment"
+2:I[2971,["/money-saving-website/_next/static/chunks/01xlw8hd842-c.js","/money-saving-website/_next/static/chunks/0d3shmwh5_nmn.js","/money-saving-website/_next/static/chunks/0tf0ihd1yyn08.js","/money-saving-website/_next/static/chunks/01ojddbztcgk~.js"],"default"]
+3:I[22016,["/money-saving-website/_next/static/chunks/01xlw8hd842-c.js","/money-saving-website/_next/static/chunks/0d3shmwh5_nmn.js","/money-saving-website/_next/static/chunks/0tf0ihd1yyn08.js","/money-saving-website/_next/static/chunks/01ojddbztcgk~.js"],""]
+a:I[13642,["/money-saving-website/_next/static/chunks/01xlw8hd842-c.js","/money-saving-website/_next/static/chunks/0d3shmwh5_nmn.js","/money-saving-website/_next/static/chunks/0tf0ihd1yyn08.js","/money-saving-website/_next/static/chunks/01ojddbztcgk~.js"],"default"]
+b:I[97367,["/money-saving-website/_next/static/chunks/01xlw8hd842-c.js","/money-saving-website/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+c:"$Sreact.suspense"
+4:T8d8,<p>
+<h2>写在前面：省钱不是抠门，是智慧</h2></p><p>作为宝妈，你是不是每天都在为家庭开支发愁？奶粉、尿不湿、早教班、玩具……孩子的开销像无底洞。</p><p>其实，家庭开支管理是一门学问。今天这篇文章，教你如何在不降低家庭生活质量的前提下，让开支'瘦'下来。</p><p><h2>第一步：建立家庭账本，摸清开支底细</h2></p><p>建议你建立一个家庭账本，把所有开支分成以下几类：
+<li><strong>固定开支</strong>：房贷/房租、车贷、保险、物业费等</li>
+<li><strong>必要开支</strong>：孩子的奶粉尿不湿、家庭日常饮食、水电燃气等</li>
+<li><strong>弹性开支</strong>：外出就餐、娱乐、购物等</li>
+<li><strong>意外开支</strong>：医疗、维修、人情往来等</li></p><p><h2>第二步：母婴用品省钱攻略</h2></p><p><strong>奶粉尿不湿：</strong>
+<li>关注各大电商平台的母婴节，囤货能省30%以上</li>
+<li>加入品牌会员，积分可以兑换商品</li>
+<li>不要盲目追求"进口"</li></p><p><strong>玩具绘本：</strong>
+<li>玩具不在多而在精</li>
+<li>绘本可以去图书馆借，或者和其他宝妈交换</li>
+<li>二手玩具、绘本性价比极高</li></p><p><strong>早教班：</strong>
+<li>早教班不是必须的，父母的陪伴才是最好的早教</li>
+<li>网上有很多免费早教资源</li></p><p><h2>第三步：家庭日常开支优化</h2></p><p><strong>饮食开支：</strong>
+<li>每周制定菜单，按计划采购</li>
+<li>学会做几道孩子爱吃的菜</li>
+<li>关注超市促销信息</li></p><p><strong>水电燃气：</strong>
+<li>选择峰谷电价</li>
+<li>夏天空调设定26度</li>
+<li>养成随手关灯、关水龙头的习惯</li></p><p><h2>第四步：建立家庭应急基金</h2></p><p>建议每个家庭都建立一个应急基金，金额为3-6个月的家庭开支。这笔钱放在流动性高的账户里，平时不动，只有真正紧急时才使用。</p><p><h2>写在最后</h2></p><p>作为宝妈，管理家庭财务是一项重要技能。省钱不是抠门，而是让有限的资源发挥最大价值。你省下的每一分钱，都是给孩子未来的礼物。
+    </p>0:{"rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen flex flex-col","children":[["$","$L2",null,{}],["$","main",null,{"className":"flex-grow","children":[["$","div",null,{"className":"bg-[#FAFAF8] border-b border-[#E8E8E4]","children":["$","div",null,{"className":"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3","children":["$","nav",null,{"className":"flex items-center gap-2 text-sm text-[#94A3B8]","children":[["$","$L3",null,{"href":"/zh","className":"hover:text-[#0F4C3A] transition-colors","children":"首页"}],["$","svg",null,{"width":"14","height":"14","viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","children":["$","polyline",null,{"points":"9 18 15 12 9 6"}]}],["$","$L3",null,{"href":"/zh/articles","className":"hover:text-[#0F4C3A] transition-colors","children":"图文文章"}],["$","svg",null,{"width":"14","height":"14","viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","children":["$","polyline",null,{"points":"9 18 15 12 9 6"}]}],["$","span",null,{"className":"text-[#4A5568] truncate max-w-[200px]","children":"宝妈群体——精打细算，让家庭开支'瘦'下来"}]]}]}]}],["$","article",null,{"className":"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10","children":[["$","div",null,{"className":"bg-white rounded-2xl p-8 md:p-10 mb-8 border border-[#E8E8E4]","children":[["$","span",null,{"className":"tag-capsule bg-[#E8F5E9] text-[#0F4C3A] mb-4","children":"宝妈"}],["$","h1",null,{"className":"text-2xl md:text-4xl font-bold text-[#0F4C3A] mt-4 mb-4 leading-tight","style":{"fontFamily":"'Noto Serif SC', Georgia, serif"},"children":"宝妈群体——精打细算，让家庭开支'瘦'下来"}],["$","div",null,{"className":"flex items-center gap-4 text-sm text-[#94A3B8]","children":[["$","span",null,{"children":"2026-05-13"}],["$","span",null,{"className":"w-1 h-1 rounded-full bg-[#E8E8E4]"}],["$","span",null,{"children":["10分钟","阅读"]}]]}],["$","div",null,{"className":"mt-5 flex flex-wrap gap-2","children":[["$","span","家庭理财",{"className":"tag-capsule bg-[#FAFAF8] text-[#4A5568] border border-[#E8E8E4]","children":"家庭理财"}],["$","span","母婴省钱",{"className":"tag-capsule bg-[#FAFAF8] text-[#4A5568] border border-[#E8E8E4]","children":"母婴省钱"}],["$","span","家庭开支",{"className":"tag-capsule bg-[#FAFAF8] text-[#4A5568] border border-[#E8E8E4]","children":"家庭开支"}]]}]]}],["$","div",null,{"className":"bg-white rounded-2xl p-8 md:p-10 border border-[#E8E8E4]","children":["$","div",null,{"className":"prose-custom","dangerouslySetInnerHTML":{"__html":"$4"}}]}],["$","div",null,{"className":"mt-8 text-center","children":["$","$L3",null,{"href":"/zh/articles","className":"inline-flex items-center gap-2 text-sm font-medium text-[#0F4C3A] hover:text-[#10B981] transition-colors","children":[["$","svg",null,{"width":"16","height":"16","viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round","children":["$L5","$L6"]}],"查看全部"]}]}]]}]]}],"$L7"]}],["$L8"],"$L9"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"dE7bcc2OPDiZQ3kuYwIBZ"}
+5:["$","line",null,{"x1":"19","y1":"12","x2":"5","y2":"12"}]
+6:["$","polyline",null,{"points":"12 19 5 12 12 5"}]
+7:["$","$La",null,{}]
+8:["$","script","script-0",{"src":"/money-saving-website/_next/static/chunks/01ojddbztcgk~.js","async":true}]
+9:["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]
+d:null

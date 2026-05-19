@@ -6,78 +6,88 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://lisani0429.github.io";
   const basePath = "/money-saving-website";
+  const locales = ["zh", "en"];
 
-  // Static pages with priority and changeFrequency
-  const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: `${baseUrl}${basePath}/`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}${basePath}/articles/`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}${basePath}/videos/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}${basePath}/podcasts/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}${basePath}/books/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}${basePath}/plan/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-  ];
+  const pages: MetadataRoute.Sitemap = [];
 
-  // Article pages
-  const articlePages: MetadataRoute.Sitemap = articles.map((article) => ({
-    url: `${baseUrl}${basePath}/articles/${article.slug}/`,
-    lastModified: new Date(article.date),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+  locales.forEach((locale) => {
+    // Static pages
+    pages.push(
+      {
+        url: `${baseUrl}${basePath}/${locale}/`,
+        lastModified: new Date(),
+        changeFrequency: "daily",
+        priority: 1.0,
+      },
+      {
+        url: `${baseUrl}${basePath}/${locale}/articles/`,
+        lastModified: new Date(),
+        changeFrequency: "daily",
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}${basePath}/${locale}/videos/`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}${basePath}/${locale}/podcasts/`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}${basePath}/${locale}/books/`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}${basePath}/${locale}/plan/`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.9,
+      }
+    );
 
-  // Video pages
-  const videoPages: MetadataRoute.Sitemap = videos.map((video) => ({
-    url: `${baseUrl}${basePath}/videos/${video.slug}/`,
-    lastModified: new Date(video.date),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+    // Dynamic pages
+    articles.forEach((article) => {
+      pages.push({
+        url: `${baseUrl}${basePath}/${locale}/articles/${article.slug}/`,
+        lastModified: new Date(article.date),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    });
 
-  // Podcast pages
-  const podcastPages: MetadataRoute.Sitemap = podcasts.map((podcast) => ({
-    url: `${baseUrl}${basePath}/podcasts/${podcast.slug}/`,
-    lastModified: new Date(podcast.date),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+    videos.forEach((video) => {
+      pages.push({
+        url: `${baseUrl}${basePath}/${locale}/videos/${video.slug}/`,
+        lastModified: new Date(video.date),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    });
 
-  // Book pages
-  const bookPages: MetadataRoute.Sitemap = books.map((book) => ({
-    url: `${baseUrl}${basePath}/books/${book.id}/`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+    podcasts.forEach((podcast) => {
+      pages.push({
+        url: `${baseUrl}${basePath}/${locale}/podcasts/${podcast.slug}/`,
+        lastModified: new Date(podcast.date),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    });
 
-  return [...staticPages, ...articlePages, ...videoPages, ...podcastPages, ...bookPages];
+    books.forEach((book) => {
+      pages.push({
+        url: `${baseUrl}${basePath}/${locale}/books/${book.id}/`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    });
+  });
+
+  return pages;
 }

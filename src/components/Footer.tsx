@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "@/lib/I18nContext";
 
 const contentLinks = [
   { href: "/articles", label: "articles" },
@@ -20,7 +20,7 @@ const aboutLinks = [
 export default function Footer() {
   const params = useParams();
   const locale = params.locale as string;
-  const t = useTranslations();
+  const { t } = useTranslation();
 
   return (
     <footer className="bg-[#0F4C3A] text-white">

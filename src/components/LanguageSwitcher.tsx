@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { locales, localeLabels, type Locale } from "@/i18n/config";
+import { locales, localeLabels, type Locale } from "@/lib/i18n";
+import { useTranslation } from "@/lib/I18nContext";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { locale } = useTranslation();
 
-  // Get current locale from pathname
-  const currentLocale = pathname.split("/")[1] as Locale;
-  const validLocale = locales.includes(currentLocale) ? currentLocale : "zh";
+  // Get current locale from context
+  const validLocale = locales.includes(locale as Locale) ? locale : "zh";
 
   // Get the path without locale prefix
   const pathWithoutLocale = pathname.replace(/^\/(zh|en)/, "") || "/";
@@ -60,19 +61,19 @@ export default function LanguageSwitcher() {
             onClick={() => setIsOpen(false)}
           />
           <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-[#E8E8E4] py-2 z-50 animate-fade-in-down">
-            {locales.map((locale) => (
+            {locales.map((l) => (
               <Link
-                key={locale}
-                href={`/${locale}${pathWithoutLocale}`}
+                key={l}
+                href={`/${l}${pathWithoutLocale}`}
                 className={`flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
-                  validLocale === locale
+                  validLocale === l
                     ? "text-[#0F4C3A] bg-[#E8F5E9] font-medium"
                     : "text-[#4A5568] hover:bg-[#FAFAF8] hover:text-[#0F4C3A]"
                 }`}
                 onClick={() => setIsOpen(false)}
               >
-                {localeLabels[locale]}
-                {validLocale === locale && (
+                {localeLabels[l]}
+                {validLocale === l && (
                   <svg
                     width="16"
                     height="16"

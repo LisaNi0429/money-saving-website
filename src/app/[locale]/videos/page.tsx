@@ -2,14 +2,13 @@ export const dynamic = "force-static";
 
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { videos } from "@/data/content";
-import { locales } from "@/i18n/config";
+import { getMessages, t as translate, locales, type Locale } from "@/lib/i18n";
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
@@ -17,12 +16,12 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = params;
-  const t = await getTranslations({ locale, namespace: "metadata.videos" });
+  const { locale } = await params;
+  const messages = getMessages(locale as Locale);
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title: translate(messages, "metadata.videos.title"),
+    description: translate(messages, "metadata.videos.description"),
     alternates: {
       canonical: `/money-saving-website/${locale}/videos/`,
     },
@@ -30,12 +29,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function VideosPage({ params }: Props) {
-  const { locale } = params;
-  
-  // Enable static rendering
-  setRequestLocale(locale);
-  
-  const t = await getTranslations({ locale });
+  const { locale } = await params;
+  const messages = getMessages(locale as Locale);
+
+  function t(key: string): string {
+    return translate(messages, key);
+  }
 
   // Translated videos
   const translatedVideos = videos.map((video, index) => ({

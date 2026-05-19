@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
-import { locales, type Locale, defaultLocale } from "@/i18n/config";
+import { getMessages, t as translate, locales, type Locale } from "@/lib/i18n";
+import LocaleLayoutClient from "./LocaleLayoutClient";
 import "../globals.css";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({
   params,
@@ -11,41 +14,38 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata.home" });
+  const messages = getMessages(locale as Locale);
+  const title = translate(messages, "metadata.home.title");
 
   return {
     title: {
-      default: t("title"),
-      template: "%s | " + t("title").split(" - ")[0],
+      default: title,
+      template: "%s | " + title.split(" - ")[0],
     },
-    description: t("description"),
+    description: translate(messages, "metadata.home.description"),
     keywords: ["saving", "money", "finance", "budget", "frugal"],
     metadataBase: new URL("https://lisani0429.github.io"),
     alternates: {
       canonical: "/money-saving-website",
     },
     openGraph: {
-      title: t("title"),
-      description: t("description"),
+      title: title,
+      description: translate(messages, "metadata.home.description"),
       url: "https://lisani0429.github.io/money-saving-website",
-      siteName: t("title").split(" - ")[0],
+      siteName: title.split(" - ")[0],
       locale: locale === "zh" ? "zh_CN" : "en_US",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
+      title: title,
+      description: translate(messages, "metadata.home.description"),
     },
     robots: {
       index: true,
       follow: true,
     },
   };
-}
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({
@@ -62,23 +62,12 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = await getMessages({ locale });
+  const validLocale = locale as Locale;
+  const messages = getMessages(validLocale);
 
   return (
-    <html lang={locale === "zh" ? "zh-CN" : "en"}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased" style={{ fontFamily: "'Noto Sans SC', system-ui, sans-serif" }}>
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <LocaleLayoutClient locale={validLocale} messages={messages}>
+      {children}
+    </LocaleLayoutClient>
   );
 }

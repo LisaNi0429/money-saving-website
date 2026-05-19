@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "@/lib/I18nContext";
 
 function YoungIcon() {
   return (
@@ -37,7 +37,7 @@ function MiddleIcon() {
 }
 
 export default function PlanForm() {
-  const t = useTranslations();
+  const { t } = useTranslation();
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({

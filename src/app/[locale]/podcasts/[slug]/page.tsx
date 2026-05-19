@@ -3,14 +3,13 @@ export const dynamic = "force-static";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { podcasts } from "@/data/content";
-import { locales } from "@/i18n/config";
+import { getMessages, t as translate, locales, type Locale } from "@/lib/i18n";
 
 interface Props {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -24,8 +23,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, slug } = params;
-  const t = await getTranslations({ locale });
+  const { locale, slug } = await params;
+  const messages = getMessages(locale as Locale);
   const podcast = podcasts.find((p) => p.slug === slug);
 
   if (!podcast) {
@@ -35,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const podcastIndex = podcasts.findIndex((p) => p.slug === slug);
-  const translatedTitle = t(`podcasts.podcast${podcastIndex + 1}.title`);
+  const translatedTitle = translate(messages, `podcasts.podcast${podcastIndex + 1}.title`);
 
   return {
     title: translatedTitle,
@@ -44,12 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PodcastPage({ params }: Props) {
-  const { locale, slug } = params;
-  
-  // Enable static rendering
-  setRequestLocale(locale);
-  
-  const t = await getTranslations({ locale });
+  const { locale, slug } = await params;
+  const messages = getMessages(locale as Locale);
+
+  function t(key: string): string {
+    return translate(messages, key);
+  }
+
   const podcast = podcasts.find((p) => p.slug === slug);
 
   if (!podcast) {

@@ -3,14 +3,13 @@ export const dynamic = "force-static";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { articles } from "@/data/content";
-import { locales } from "@/i18n/config";
+import { getMessages, t as translate, locales, type Locale } from "@/lib/i18n";
 
 interface Props {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -24,8 +23,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, slug } = params;
-  const t = await getTranslations({ locale });
+  const { locale, slug } = await params;
+  const messages = getMessages(locale as Locale);
   const article = articles.find((a) => a.slug === slug);
 
   if (!article) {
@@ -36,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // Get translated article title
   const articleIndex = articles.findIndex((a) => a.slug === slug);
-  const translatedTitle = t(`articles.article${(articleIndex % 3) + 1}.title`);
+  const translatedTitle = translate(messages, `articles.article${(articleIndex % 3) + 1}.title`);
 
   return {
     title: translatedTitle,
@@ -45,12 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const { locale, slug } = params;
-  
-  // Enable static rendering
-  setRequestLocale(locale);
-  
-  const t = await getTranslations({ locale });
+  const { locale, slug } = await params;
+  const messages = getMessages(locale as Locale);
+
+  function t(key: string): string {
+    return translate(messages, key);
+  }
+
   const article = articles.find((a) => a.slug === slug);
 
   if (!article) {
